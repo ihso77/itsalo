@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle, #3a0078, #1e003d);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 60px;
+            border-radius: 16px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            width: 480px;
+            height: 550px;
+        }
+        .container:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 180deg, #9d4edd, #3a0078, #1e003d, #9d4edd);
+            z-index: 0;
+            filter: blur(100px);
+            animation: rotate 6s linear infinite;
+        }
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .container h1 {
+            margin: 0 0 20px;
+            font-size: 32px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .container input {
+            padding: 14px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .container input:focus {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .container button {
+            padding: 14px 18px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(90deg, #9d4edd, #3a0078);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
+        }
+        .container button:hover {
+            transform: scale(1.05);
+        }
+        .container button:active {
+            transform: scale(0.98);
+        }
+        .remember-label {
+            font-size: 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+        .remember-label input {
+            width: 22px;
+            height: 22px;
+            accent-color: #9d4edd;
+            transition: all 0.3s ease;
+        }
+        .remember-label input:checked {
+            background-color: #9d4edd;
+        }
+        .remember-label:hover {
+            color: #9d4edd;
+        }
+        .forgot-password {
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .forgot-password:hover {
+            color: #9d4edd;
+        }
+
+        /* Message error animation */
+        .error-message {
+            color: #ff0000;
+            font-size: 18px;
+            font-weight: 600;
+            background-color: rgba(255, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            transform: scale(0);
+            animation: pop-up 0.5s forwards;
+        }
+
+        @keyframes pop-up {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تسجيل الدخول</h1>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            <input type="password" id="password" placeholder="كلمة المرور" required>
+            <label for="remember" class="remember-label">
+                <input type="checkbox" id="remember"> تذكرني
+            </label>
+            <button type="submit">تسجيل الدخول</button>
+        </form>
+        <a href="signup.html" class="forgot-password">ليس لديك حساب؟ سجل الآن</a>
+
+        <!-- Error message container -->
+        <div id="errorMessage" class="error-message">البريد الإلكتروني أو كلمة المرور غير صحيحة!</div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const storedUserData = localStorage.getItem('user');
+            const userData = storedUserData ? JSON.parse(storedUserData) : null;
+
+            const errorMessage = document.getElementById('errorMessage');
+
+            if (!userData || userData.email !== email || userData.password !== password) {
+                // Show error message with animation
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            alert('تم تسجيل الدخول بنجاح!');
+            window.location.href = 'ALO.html'; // Redirect to profile page after successful login
+        });
+    </script>
+</body>
+</html>
